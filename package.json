@@ -1,6 +1,6 @@
 {
   "name": "@hexlet/code",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "program to highlight differences between two structures",
   "main": "src/gendiff_core.js",
   "type": "module",
@@ -29,6 +29,7 @@
     "prettier": "2.8.4"
   },
   "dependencies": {
-    "commander": "^10.0.0"
+    "commander": "^10.0.0",
+    "lodash": "^4.17.21"
   }
 }
