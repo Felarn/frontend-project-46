@@ -1,4 +1,6 @@
-console.log('Hello! I`m insdex.js <-----');
+import textColor from "./lib/textColor.js";
+
+console.log(textColor.yellow, 'Hello! I`m insdex.js <-----');
 
 import { program } from "commander";
 
