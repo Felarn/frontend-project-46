@@ -2,10 +2,12 @@ import textColor from './lib/textColor.js';
 import gendiff_core from './gendiff_core.js';
 import { program } from 'commander';
 import path from 'path';
-import fs from 'fs';
+// import fs from 'fs';
+import getTextFromFile from './lib/getTextFromFile.js';
 
-// const { version } = JSON.parse(fs.readFileSync('./package.json'));
-const version = '0.2.0';
+const { version } = JSON.parse(
+  getTextFromFile('/home/felarn/frontend-project-46/package.json')
+);
 
 console.log(textColor.yellow, 'Hello! I`m main_script.js <-----');
 
