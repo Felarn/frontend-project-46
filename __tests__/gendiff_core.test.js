@@ -1,19 +1,50 @@
-import getTextFromFile from '../src/lib/getTextFromFile.js';
+import readFile from '../src/lib/getTextFromFile.js';
 import gendiff from '../src/gendiff_core.js';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import fs from 'fs';
 
-const testFile1Path = '__tests__/__fixtures__/flat_test/file1.json';
-const testFile2Path = '__tests__/__fixtures__/flat_test/file2.json';
-const expected1 = getTextFromFile(
-  '__tests__/__fixtures__/flat_test/result1.txt'
-);
-const expected2 = getTextFromFile(
-  '__tests__/__fixtures__/flat_test/result2.txt'
+const fixturesPath = path.resolve(
+  fileURLToPath(import.meta.url),
+  '../..',
+  '__fixtures__'
 );
 
-test('file1 > file2', () => {
-  expect(gendiff(testFile1Path, testFile2Path)).toEqual(expected1);
+const getFixturePath = (...parts) => path.resolve(fixturesPath, ...parts);
+
+const flatDir = 'flat_test';
+const flatJSON1 = getFixturePath(flatDir, 'file1.json');
+const flatJSON2 = getFixturePath(flatDir, 'file2.json');
+const emptyJSON = getFixturePath('empty.json');
+const emptyYML = getFixturePath('empty.json');
+
+const expect1to1 = readFile(getFixturePath(flatDir, 'result1to1.txt'));
+const expect1to2 = readFile(getFixturePath(flatDir, 'result1to2.txt'));
+const expect2to1 = readFile(getFixturePath(flatDir, 'result2to1.txt'));
+const expectEmptyTo1 = readFile(getFixturePath(flatDir, 'resultEmptyTo1.txt'));
+const expect1ToEmpty = readFile(getFixturePath(flatDir, 'result1toEmpty.txt'));
+const expectEmptyToEmpty = readFile(getFixturePath('resultEmptyToEmpty.txt'));
+
+test('Flat json1 > json2', () => {
+  expect(gendiff(flatJSON1, flatJSON2)).toEqual(expect1to2);
 });
 
-test('file2 > file1', () => {
-  expect(gendiff(testFile2Path, testFile1Path)).toEqual(expected2);
+test('Flat json2 > json1', () => {
+  expect(gendiff(flatJSON2, flatJSON1)).toEqual(expect2to1);
+});
+
+test('Flat json1 > json1', () => {
+  expect(gendiff(flatJSON1, flatJSON1)).toEqual(expect1to1);
+});
+
+test('Flat json1 > {}', () => {
+  expect(gendiff(flatJSON1, emptyJSON)).toEqual(expect1ToEmpty);
+});
+
+test('Flat {} > json1', () => {
+  expect(gendiff(emptyJSON, flatJSON1)).toEqual(expectEmptyTo1);
+});
+
+test('Flat {} > {}', () => {
+  expect(gendiff(emptyJSON, emptyJSON)).toEqual(expectEmptyToEmpty);
 });
