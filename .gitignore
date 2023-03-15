@@ -1,2 +1,9 @@
 node_modules
+
+# Ignore test-related files
+/coverage.data
+/coverage/
+
+# ignore experimental files
 temp*
+sandbox*
