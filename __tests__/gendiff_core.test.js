@@ -10,10 +10,10 @@ const expected2 = getTextFromFile(
   '__tests__/__fixtures__/flat_test/result2.txt'
 );
 
-test('test file1 > file2', () => {
+test('file1 > file2', () => {
   expect(gendiff(testFile1Path, testFile2Path)).toEqual(expected1);
 });
 
-test('test file2 > file1', () => {
+test('file2 > file1', () => {
   expect(gendiff(testFile2Path, testFile1Path)).toEqual(expected2);
 });
