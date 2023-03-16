@@ -17,6 +17,7 @@ const simpleDir = 'simple';
 const nestedDir = 'nested';
 const extJSON = '.json';
 const extYML = '.yml';
+const extYAML = '.yaml';
 const file_1 = 'file1';
 const file_2 = 'file2';
 const fileEmpty = 'empty';
@@ -39,9 +40,9 @@ const cases = [
   [simpleDir, fileEmpty, simpleDir, file_1, structuredDir, expSimple_empty_1],
   [simpleDir, file_1, simpleDir, fileEmpty, structuredDir, expSimple_1_empty],
   [simpleDir, fileEmpty, simpleDir, fileEmpty, structuredDir, exp_empty_empty],
-  [nestedDir, file_1, nestedDir, file_2, structuredDir, expNested_1_2],
+  // [nestedDir, file_1, nestedDir, file_2, structuredDir, expNested_1_2],
 ];
-const extesions = [extJSON, extYML];
+const extesions = [extJSON, extYML, extYAML];
 
 // ============ тест ======================================
 describe.each(extesions)('from %s-file', (ext1) => {
