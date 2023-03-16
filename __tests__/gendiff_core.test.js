@@ -29,6 +29,8 @@ const expSimple_empty_1 = 'simple_empty_1.txt';
 const expSimple_1_empty = 'simple_1_empty.txt';
 const exp_empty_empty = 'empty_empty.txt';
 
+const expNested_1_2 = 'nested_1_2.txt';
+
 // =========== таблицы комбинаций для проверки ==========
 const cases = [
   [simpleDir, file_1, simpleDir, file_2, structuredDir, expSimple_1_2],
@@ -37,6 +39,7 @@ const cases = [
   [simpleDir, fileEmpty, simpleDir, file_1, structuredDir, expSimple_empty_1],
   [simpleDir, file_1, simpleDir, fileEmpty, structuredDir, expSimple_1_empty],
   [simpleDir, fileEmpty, simpleDir, fileEmpty, structuredDir, exp_empty_empty],
+  [nestedDir, file_1, nestedDir, file_2, structuredDir, expNested_1_2],
 ];
 const extesions = [extJSON, extYML];
 
