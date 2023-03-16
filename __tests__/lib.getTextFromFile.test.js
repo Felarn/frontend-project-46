@@ -1,4 +1,4 @@
-import getTextFromFile from '../src/lib/getTextFromFile.js';
+import getTextFromFile from '../src/lib/readFile.js';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
