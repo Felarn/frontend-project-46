@@ -2,49 +2,55 @@ import readFile from '../src/lib/getTextFromFile.js';
 import gendiff from '../src/gendiff_core.js';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import fs from 'fs';
 
 const fixturesPath = path.resolve(
   fileURLToPath(import.meta.url),
-  '../..',
-  '__fixtures__'
+  '../../__fixtures__'
 );
 
 const getFixturePath = (...parts) => path.resolve(fixturesPath, ...parts);
 
-const flatDir = 'flat_test';
-const flatJSON1 = getFixturePath(flatDir, 'file1.json');
-const flatJSON2 = getFixturePath(flatDir, 'file2.json');
-const emptyJSON = getFixturePath('empty.json');
-const emptyYML = getFixturePath('empty.json');
+// ========= части файлов со входными данными ======
+const structuredDir = 'expect_structured';
+const flatDir = 'expect_flat';
+const simpleDir = 'simple';
+const nestedDir = 'nested';
+const extJSON = '.json';
+const extYML = '.yml';
+const file_1 = 'file1';
+const file_2 = 'file2';
+const fileEmpty = 'empty';
 
-const expect1to1 = readFile(getFixturePath(flatDir, 'result1to1.txt'));
-const expect1to2 = readFile(getFixturePath(flatDir, 'result1to2.txt'));
-const expect2to1 = readFile(getFixturePath(flatDir, 'result2to1.txt'));
-const expectEmptyTo1 = readFile(getFixturePath(flatDir, 'resultEmptyTo1.txt'));
-const expect1ToEmpty = readFile(getFixturePath(flatDir, 'result1toEmpty.txt'));
-const expectEmptyToEmpty = readFile(getFixturePath('resultEmptyToEmpty.txt'));
+// ========= файлы с ожидаемымыи результатами =====
+const expSimple_1_1 = 'simple_1_1.txt';
+const expSimple_1_2 = 'simple_1_2.txt';
+const expSimple_2_1 = 'simple_2_1.txt';
+const expSimple_empty_1 = 'simple_empty_1.txt';
+const expSimple_1_empty = 'simple_1_empty.txt';
+const exp_empty_empty = 'empty_empty.txt';
 
-test('Flat json1 > json2', () => {
-  expect(gendiff(flatJSON1, flatJSON2)).toEqual(expect1to2);
-});
+// =========== таблицы комбинаций для проверки ==========
+const cases = [
+  [simpleDir, file_1, simpleDir, file_2, structuredDir, expSimple_1_2],
+  [simpleDir, file_2, simpleDir, file_1, structuredDir, expSimple_2_1],
+  [simpleDir, file_1, simpleDir, file_1, structuredDir, expSimple_1_1],
+  [simpleDir, fileEmpty, simpleDir, file_1, structuredDir, expSimple_empty_1],
+  [simpleDir, file_1, simpleDir, fileEmpty, structuredDir, expSimple_1_empty],
+  [simpleDir, fileEmpty, simpleDir, fileEmpty, structuredDir, exp_empty_empty],
+];
+const extesions = [extJSON, extYML];
 
-test('Flat json2 > json1', () => {
-  expect(gendiff(flatJSON2, flatJSON1)).toEqual(expect2to1);
-});
-
-test('Flat json1 > json1', () => {
-  expect(gendiff(flatJSON1, flatJSON1)).toEqual(expect1to1);
-});
-
-test('Flat json1 > {}', () => {
-  expect(gendiff(flatJSON1, emptyJSON)).toEqual(expect1ToEmpty);
-});
-
-test('Flat {} > json1', () => {
-  expect(gendiff(emptyJSON, flatJSON1)).toEqual(expectEmptyTo1);
-});
-
-test('Flat {} > {}', () => {
-  expect(gendiff(emptyJSON, emptyJSON)).toEqual(expectEmptyToEmpty);
+// ============ тест ======================================
+describe.each(extesions)('from %s-file', (ext1) => {
+  describe.each(extesions)('to %s-file', (ext2) => {
+    test.each(cases)(
+      'from: %s/%s to --> %s/%s \n\texpected output: %s/%s',
+      (dir1, file1, dir2, file2, expDir, expFile) => {
+        const path1 = getFixturePath(dir1, file1 + ext1);
+        const path2 = getFixturePath(dir2, file2 + ext2);
+        const expectations = readFile(getFixturePath(expDir, expFile));
+        expect(gendiff(path1, path2)).toEqual(expectations);
+      }
+    );
+  });
 });
