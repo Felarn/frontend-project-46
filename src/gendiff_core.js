@@ -1,31 +1,14 @@
 import textColor from './lib/textColor.js';
-import getTextFromFile from './lib/getTextFromFile.js';
-import YML from 'js-yaml';
-import fs from 'fs';
+import getObjFromFile from './lib/getObjFromFile.js';
+import getDiff from './lib/getDiff.js';
 
-export default function gendiff(path1, path2, options = {}) {
-  const obj1 = YML.load(getTextFromFile(path1) || '{}');
-  const obj2 = YML.load(getTextFromFile(path2) || '{}');
-  // const obj1 = JSON.parse(getTextFromFile(path1) || '{}');
-  // const obj2 = JSON.parse(getTextFromFile(path2) || '{}');
+export default function gendiff(path1, path2, format = 'stylish') {
+  const obj1 = getObjFromFile(path1);
+  const obj2 = getObjFromFile(path2);
 
-  const allEntries = Object.keys({ ...obj1, ...obj2 }).sort();
+  const diffArr = getDiff(obj1, obj2);
+  const diffFormatted = diffArr;
 
-  let diffString = allEntries.reduce((outStr, key) => {
-    if (Object.hasOwn(obj1, key) && !Object.hasOwn(obj2, key)) {
-      outStr += `  - ${key}: ${obj1[key]}\n`;
-    } else if (!Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
-      outStr += `  + ${key}: ${obj2[key]}\n`;
-    } else if (obj1[key] !== obj2[key]) {
-      outStr += `  - ${key}: ${obj1[key]}\n`;
-      outStr += `  + ${key}: ${obj2[key]}\n`;
-    } else {
-      outStr += `    ${key}: ${obj1[key]}\n`;
-    }
-    return outStr;
-  }, '');
-
-  diffString = `{\n${diffString}}`;
-  console.log(diffString);
-  return diffString;
+  console.log(diffFormatted);
+  return diffFormatted;
 }
