@@ -11,7 +11,7 @@ lint:
 	npx eslint .
 
 test:
-	npx jest
+	npx jest --verbose
 
 coverage:
 	npx jest --coverage
