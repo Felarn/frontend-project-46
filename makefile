@@ -13,5 +13,5 @@ lint:
 test:
 	npx jest --verbose
 
-coverage:
+cover:
 	npx jest --coverage
