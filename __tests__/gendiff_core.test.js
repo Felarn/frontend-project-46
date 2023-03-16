@@ -1,14 +1,6 @@
-import readFile from '../src/lib/getTextFromFile.js';
+import readFile from '../src/lib/readFile.js';
 import gendiff from '../src/gendiff_core.js';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const fixturesPath = path.resolve(
-  fileURLToPath(import.meta.url),
-  '../../__fixtures__'
-);
-
-const getFixturePath = (...parts) => path.resolve(fixturesPath, ...parts);
+import getFixturePath from '../__fixtures__/getFixturePath.js';
 
 // ========= части файлов со входными данными ======
 const structuredDir = 'expect_structured';
@@ -44,7 +36,7 @@ const cases = [
 ];
 const extesions = [extJSON, extYML, extYAML];
 
-// ============ тест ======================================
+// ============ тесты ======================================
 describe.each(extesions)('from %s-file', (ext1) => {
   describe.each(extesions)('to %s-file', (ext2) => {
     test.each(cases)(
