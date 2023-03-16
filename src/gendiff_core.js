@@ -1,10 +1,13 @@
 import textColor from './lib/textColor.js';
 import getTextFromFile from './lib/getTextFromFile.js';
+import YML from 'js-yaml';
 import fs from 'fs';
 
 export default function gendiff(path1, path2, options = {}) {
-  const obj1 = JSON.parse(getTextFromFile(path1) || '{}');
-  const obj2 = JSON.parse(getTextFromFile(path2) || '{}');
+  const obj1 = YML.load(getTextFromFile(path1) || '{}');
+  const obj2 = YML.load(getTextFromFile(path2) || '{}');
+  // const obj1 = JSON.parse(getTextFromFile(path1) || '{}');
+  // const obj2 = JSON.parse(getTextFromFile(path2) || '{}');
 
   const allEntries = Object.keys({ ...obj1, ...obj2 }).sort();
 
