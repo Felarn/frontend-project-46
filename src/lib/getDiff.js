@@ -1,29 +1,25 @@
-export default (obj1, obj2) => {
+const getDiff = (obj1, obj2, level = 0) => {
   const allEntries = Object.keys({ ...obj1, ...obj2 }).sort();
 
-  // allEntries.flatMap((keyName) => {
-  //   ({
-  //     key: keyName,
-  //     old: Object.hasOwn(obj1, key) && obj1[key],
-  //     new: Object.hasOwn(obj2, key) && obj2[key],
-  //   });
-  // });
+  const diffArr = allEntries.flatMap((keyName) => {
+    if (typeof obj1[keyName] === 'object' && typeof obj2[keyName] === 'object')
+      return getDiff(obj1[keyName], obj2[keyName], level + 1);
 
-  let diffString = allEntries.reduce((outStr, key) => {
-    if (Object.hasOwn(obj1, key) && !Object.hasOwn(obj2, key)) {
-      outStr += `  - ${key}: ${obj1[key]}\n`;
-    } else if (!Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
-      outStr += `  + ${key}: ${obj2[key]}\n`;
-    } else if (obj1[key] !== obj2[key]) {
-      outStr += `  - ${key}: ${obj1[key]}\n`;
-      outStr += `  + ${key}: ${obj2[key]}\n`;
-    } else {
-      outStr += `    ${key}: ${obj1[key]}\n`;
-    }
-    return outStr;
-  }, '');
+    return {
+      key: keyName,
+      old: Object.hasOwn(obj1, keyName) && stringify(obj1[keyName], obj1),
+      new: Object.hasOwn(obj2, keyName) && stringify(obj2[keyName], obj2),
+      unchenged: obj1[keyName] === obj2[keyName],
+      depth: level,
+    };
+  });
 
-  diffString = `{\n${diffString}}`;
-
-  return diffString;
+  return diffArr;
 };
+
+const stringify = (input, obj) => {
+  if (typeof input !== 'object' || input === null) return String(input);
+  return JSON.stringify(input, null, 4).replaceAll('"', '').replaceAll(',', '');
+};
+
+export default getDiff;

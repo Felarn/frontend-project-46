@@ -32,7 +32,7 @@ const cases = [
   [simpleDir, fileEmpty, simpleDir, file_1, structuredDir, expSimple_empty_1],
   [simpleDir, file_1, simpleDir, fileEmpty, structuredDir, expSimple_1_empty],
   [simpleDir, fileEmpty, simpleDir, fileEmpty, structuredDir, exp_empty_empty],
-  // [nestedDir, file_1, nestedDir, file_2, structuredDir, expNested_1_2],
+  [nestedDir, file_1, nestedDir, file_2, structuredDir, expNested_1_2],
 ];
 const extesions = [extJSON, extYML, extYAML];
 

@@ -1,15 +1,10 @@
-import textColor from './lib/textColor.js';
 import gendiff_core from './gendiff_core.js';
 import { program } from 'commander';
-import path from 'path';
-// import fs from 'fs';
 import getTextFromFile from './lib/readFile.js';
 
 const { version } = JSON.parse(
   getTextFromFile('/home/felarn/frontend-project-46/package.json')
 );
-
-console.log(textColor.yellow, 'Hello! I`m main_script.js <-----');
 
 program
   .version(version)
