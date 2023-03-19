@@ -9,9 +9,10 @@ export default function gendiff(path1, path2, formatStyle = 'stylish') {
   const diff = getDiff(obj1, obj2);
   const formattedDiff = format[formatStyle](diff);
 
-  const colorTags = getColorTags[formatStyle](formattedDiff);
-  display(formattedDiff, colorTags);
+  // const colorTags = getColorTags[formatStyle](formattedDiff);
+  // display(formattedDiff, colorTags);
 
   const diffText = formattedDiff.join('\n');
+  console.log(diffText);
   return diffText;
 }

@@ -54,5 +54,33 @@ const toString = (input, depth) => {
   );
 };
 
-const flat = () => {};
-export default { stylish, flat };
+const formatValue = (entity) => {
+  if (isObject(entity)) return '[complex value]';
+  if (typeof entity === 'string') return `'${entity}'`;
+  return entity;
+};
+const wasRemoved = (obj) =>
+  Object.hasOwn(obj, 'old') && !Object.hasOwn(obj, 'new');
+
+const wasAdded = (obj) =>
+  !Object.hasOwn(obj, 'old') && Object.hasOwn(obj, 'new');
+
+const getAction = (obj) => {
+  'not changed'; // временно, не должно выдаваться ничего
+  if (wasRemoved(obj)) return 'removed';
+  if (wasAdded(obj)) return `added with value: ${formatValue(obj.new)}`;
+
+  return `updated. From ${formatValue(obj.old)} to ${formatValue(obj.new)}`;
+};
+
+const plain = (diff, path = '') => {
+  console.log(diff, 'diff <=============');
+  const out = diff.flatMap((row) => {
+    if (row.unchenged)
+      return isObject(row.old) ? plain(row.old, path + row.key + '.') : [];
+    return `Property '${path + row.key}' was ${getAction(row)}`;
+  });
+  console.log(out);
+  return out;
+};
+export default { stylish, plain };

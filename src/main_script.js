@@ -13,7 +13,7 @@ program
   .arguments('<filepath1>, <filepath2>')
   .action(function (filepath1, filepath2, options) {
     const format = options.format ?? 'stylish';
-    if (!['stylish', 'flat'].includes(format))
+    if (!['stylish', 'plain'].includes(format))
       throw new Error('Incorrect format option');
 
     gendiff_core(filepath1, filepath2, format);
