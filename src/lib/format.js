@@ -2,19 +2,11 @@ import { isObject } from './utils.js';
 
 const stylish = (diff) => {
   const output = diff.flatMap((row) => {
-    console.log(JSON.stringify(row));
     if (row.unchenged) {
-      // console.log(JSON.stringify(row));
       let [firstRow, restRows] = ['', []];
 
       if (isObject(row.old)) {
         [firstRow, ...restRows] = stylish(row.old);
-
-        console.log(
-          'restRows :',
-          restRows.at(-1),
-          '%%%%%%%%%%%%%%==============================='
-        );
 
         restRows.push('    '.repeat(row.depth + 1) + restRows.pop());
       } else {
@@ -43,7 +35,6 @@ const stylish = (diff) => {
           row.depth
         )}`
       );
-    console.log(out);
     return out;
   });
 
