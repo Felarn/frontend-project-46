@@ -12,7 +12,8 @@ export default function gendiff(path1, path2, formatStyle = 'stylish') {
   // const colorTags = getColorTags[formatStyle](formattedDiff);
   // display(formattedDiff, colorTags);
 
-  const diffText = formattedDiff.join('\n');
+  const diffText =
+    formatStyle !== 'json' ? formattedDiff.join('\n') : formattedDiff;
   console.log(diffText);
   return diffText;
 }

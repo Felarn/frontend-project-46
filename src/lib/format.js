@@ -1,12 +1,12 @@
 import { isObject } from './utils.js';
 
-const stylish = (diff) => {
+const formatStylish = (diff) => {
   const output = diff.flatMap((row) => {
     if (row.unchenged) {
       let [firstRow, restRows] = ['', []];
 
       if (isObject(row.old)) {
-        [firstRow, ...restRows] = stylish(row.old);
+        [firstRow, ...restRows] = formatStylish(row.old);
 
         restRows.push('    '.repeat(row.depth + 1) + restRows.pop());
       } else {
@@ -73,14 +73,19 @@ const getAction = (obj) => {
   return `updated. From ${formatValue(obj.old)} to ${formatValue(obj.new)}`;
 };
 
-const plain = (diff, path = '') => {
+const formatPlain = (diff, path = '') => {
   console.log(diff, 'diff <=============');
   const out = diff.flatMap((row) => {
     if (row.unchenged)
-      return isObject(row.old) ? plain(row.old, path + row.key + '.') : [];
+      return isObject(row.old)
+        ? formatPlain(row.old, path + row.key + '.')
+        : [];
     return `Property '${path + row.key}' was ${getAction(row)}`;
   });
   console.log(out);
   return out;
 };
-export default { stylish, plain };
+
+const formatJson = (diff) => JSON.stringify(diff);
+
+export default { stylish: formatStylish, plain: formatPlain, json: formatJson };
