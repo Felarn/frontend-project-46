@@ -3,7 +3,7 @@ import gendiff from '../src/gendiff_core.js';
 import getFixturePath from '../__fixtures__/getFixturePath.js';
 
 // ========= части файлов со входными данными ======
-const structuredDir = 'expect_structured';
+const structuredDir = 'expect_stylish';
 const flatDir = 'expect_flat';
 const simpleDir = 'simple';
 const nestedDir = 'nested';
