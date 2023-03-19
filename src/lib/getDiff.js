@@ -6,9 +6,12 @@ const getDiff = (obj1, obj2, level = 0) => {
   const diffArr = allEntries.flatMap((keyName) => {
     if (typeof obj1[keyName] === 'object' && typeof obj2[keyName] === 'object')
       return [
-        { key: keyName, unchenged: true, new: '{', old: '{', depth: level },
-        ...getDiff(obj1[keyName], obj2[keyName], level + 1),
-        { key: '', unchenged: true, new: '}', old: '}', depth: level },
+        {
+          key: keyName,
+          unchenged: true,
+          old: getDiff(obj1[keyName], obj2[keyName], level + 1),
+          depth: level,
+        },
       ];
 
     const out = {

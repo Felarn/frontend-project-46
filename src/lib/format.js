@@ -2,8 +2,30 @@ import { isObject } from './utils.js';
 
 const stylish = (diff) => {
   const output = diff.flatMap((row) => {
-    if (row.unchenged)
-      return `${'    '.repeat(row.depth + 1)}${row.key}: ${row.old}`;
+    console.log(JSON.stringify(row));
+    if (row.unchenged) {
+      // console.log(JSON.stringify(row));
+      let [firstRow, restRows] = ['', []];
+
+      if (isObject(row.old)) {
+        [firstRow, ...restRows] = stylish(row.old);
+
+        console.log(
+          'restRows :',
+          restRows.at(-1),
+          '%%%%%%%%%%%%%%==============================='
+        );
+
+        restRows.push('    '.repeat(row.depth + 1) + restRows.pop());
+      } else {
+        firstRow = row.old;
+      }
+
+      return [
+        `${'    '.repeat(row.depth + 1)}${row.key}: ${firstRow}`,
+        ...restRows,
+      ];
+    }
     const out = [];
 
     if (Object.hasOwn(row, 'old'))
