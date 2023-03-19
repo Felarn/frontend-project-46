@@ -12,7 +12,11 @@ program
   .option('-f --format <type>', 'output format')
   .arguments('<filepath1>, <filepath2>')
   .action(function (filepath1, filepath2, options) {
-    gendiff_core(filepath1, filepath2, options.format);
+    const format = options.format ?? 'stylish';
+    if (!['stylish', 'flat'].includes(format))
+      throw new Error('Incorrect format option');
+
+    gendiff_core(filepath1, filepath2, format);
   });
 
 export default program.parse();
