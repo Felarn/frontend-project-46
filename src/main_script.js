@@ -2,9 +2,7 @@ import gendiff_core from './gendiff_core.js';
 import { program } from 'commander';
 import getTextFromFile from './lib/readFile.js';
 
-const { version } = JSON.parse(
-  getTextFromFile('/home/felarn/frontend-project-46/package.json')
-);
+const { version } = JSON.parse(getTextFromFile('package.json'));
 
 program
   .version(version)
