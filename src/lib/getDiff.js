@@ -1,30 +1,32 @@
 import { isObject } from './utils.js';
 
-const getDiff = (obj1, obj2, level = 0) => {
-  const allEntries = Object.keys({ ...obj1, ...obj2 }).sort();
+const getDiff = (obj1, obj2, depth = 0) =>
+  Object.keys({ ...obj1, ...obj2 })
+    .sort()
+    .map((key) => {
+      if (isObject(obj1[key]) && isObject(obj2[key]))
+        return {
+          key,
+          depth,
+          type: 'node',
+          children: getDiff(obj1[key], obj2[key], depth + 1),
+        };
 
-  const diffArr = allEntries.flatMap((keyName) => {
-    if (typeof obj1[keyName] === 'object' && typeof obj2[keyName] === 'object')
-      return [
-        {
-          key: keyName,
-          unchenged: true,
-          old: getDiff(obj1[keyName], obj2[keyName], level + 1),
-          depth: level,
-        },
-      ];
+      return {
+        key,
+        depth,
+        type: 'terminal',
+        status: getStatus(obj1, obj2, key),
+        oldValue: obj1[key],
+        newValue: obj2[key],
+      };
+    });
 
-    const out = {
-      key: keyName,
-      unchenged: obj1[keyName] === obj2[keyName],
-      depth: level,
-    };
-    if (Object.hasOwn(obj1, keyName)) out.old = obj1[keyName];
-    if (Object.hasOwn(obj2, keyName)) out.new = obj2[keyName];
-    return out;
-  });
-
-  return diffArr;
+const getStatus = (obj1, obj2, key) => {
+  if (!Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) return 'added';
+  if (Object.hasOwn(obj1, key) && !Object.hasOwn(obj2, key)) return 'removed';
+  if (obj1[key] === obj2[key]) return 'unchanged';
+  return 'changed';
 };
 
 export default getDiff;

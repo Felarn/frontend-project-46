@@ -2,16 +2,10 @@ import { isObject } from './utils.js';
 
 const formatStylish = (diff) => {
   const output = diff.flatMap((row) => {
-    if (row.unchenged) {
-      let [firstRow, restRows] = ['', []];
+    if (isNode(row)) {
+      const [firstRow, ...restRows] = formatStylish(row.children);
 
-      if (isObject(row.old)) {
-        [firstRow, ...restRows] = formatStylish(row.old);
-
-        restRows.push('    '.repeat(row.depth + 1) + restRows.pop());
-      } else {
-        firstRow = row.old;
-      }
+      restRows.push('    '.repeat(row.depth + 1) + restRows.pop());
 
       return [
         formStringStylish(' ', row.key, firstRow, row.depth),
@@ -20,12 +14,14 @@ const formatStylish = (diff) => {
     }
 
     const out = [];
+    if (isStatus(row, 'unchanged'))
+      out.push(formStringStylish(' ', row.key, row.oldValue, row.depth));
 
-    if (Object.hasOwn(row, 'old'))
-      out.push(formStringStylish('-', row.key, row.old, row.depth));
+    if (isStatus(row, 'removed', 'changed'))
+      out.push(formStringStylish('-', row.key, row.oldValue, row.depth));
 
-    if (Object.hasOwn(row, 'new'))
-      out.push(formStringStylish('+', row.key, row.new, row.depth));
+    if (isStatus(row, 'added', 'changed'))
+      out.push(formStringStylish('+', row.key, row.newValue, row.depth));
 
     return out;
   });
@@ -33,14 +29,16 @@ const formatStylish = (diff) => {
   return ['{', ...output, '}'];
 };
 
-const formStringStylish = (symbol, key, value, depth) =>
+const isNode = (obj) => obj.type === 'node';
+const isStatus = (obj, ...states) => states.includes(obj.status);
+
+const formStringStylish = (symbol, key, Value, depth) =>
   `${'    '.repeat(depth)}  ${symbol} ${key}:${formatValueStylish(
-    value,
+    Value,
     depth
   )}`;
 
 const formatValueStylish = (input, depth) => {
-  // if (input === '') return '';
   if (!isObject(input)) return ' ' + String(input);
 
   const objAsText =
@@ -60,28 +58,27 @@ const formatValuePlain = (entity) => {
   return entity;
 };
 
-const wasRemoved = (obj) =>
-  Object.hasOwn(obj, 'old') && !Object.hasOwn(obj, 'new');
-
-const wasAdded = (obj) =>
-  !Object.hasOwn(obj, 'old') && Object.hasOwn(obj, 'new');
-
 const getAction = (obj) => {
-  if (wasRemoved(obj)) return 'removed';
-  if (wasAdded(obj)) return `added with value: ${formatValuePlain(obj.new)}`;
-
-  return `updated. From ${formatValuePlain(obj.old)} to ${formatValuePlain(
-    obj.new
-  )}`;
+  switch (obj.status) {
+    case 'removed':
+      return 'removed';
+    case 'added':
+      return `added with value: ${formatValuePlain(obj.newValue)}`;
+    case 'changed':
+      return `updated. From ${formatValuePlain(
+        obj.oldValue
+      )} to ${formatValuePlain(obj.newValue)}`;
+    default:
+      return [];
+  }
 };
 
 const formatPlain = (diff, path = '') => {
   const out = diff.flatMap((row) => {
-    if (row.unchenged)
-      return isObject(row.old)
-        ? formatPlain(row.old, path + row.key + '.')
-        : [];
-    return `Property '${path + row.key}' was ${getAction(row)}`;
+    if (isNode(row)) return formatPlain(row.children, path + row.key + '.');
+    if (row.status !== 'unchanged')
+      return `Property '${path + row.key}' was ${getAction(row)}`;
+    return [];
   });
   return out;
 };
