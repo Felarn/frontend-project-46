@@ -1,5 +1,12 @@
 import { isObject } from './utils.js';
 
+const getStatus = (obj1, obj2, key) => {
+  if (!Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) return 'added';
+  if (Object.hasOwn(obj1, key) && !Object.hasOwn(obj2, key)) return 'removed';
+  if (obj1[key] === obj2[key]) return 'unchanged';
+  return 'changed';
+};
+
 const getDiff = (obj1, obj2, depth = 0) =>
   Object.keys({ ...obj1, ...obj2 })
     .sort()
@@ -21,12 +28,5 @@ const getDiff = (obj1, obj2, depth = 0) =>
         newValue: obj2[key],
       };
     });
-
-const getStatus = (obj1, obj2, key) => {
-  if (!Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) return 'added';
-  if (Object.hasOwn(obj1, key) && !Object.hasOwn(obj2, key)) return 'removed';
-  if (obj1[key] === obj2[key]) return 'unchanged';
-  return 'changed';
-};
 
 export default getDiff;

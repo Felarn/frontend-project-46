@@ -5,7 +5,8 @@ const formatStylish = (diff) => {
     if (isNode(row)) {
       const [firstRow, ...restRows] = formatStylish(row.children);
 
-      restRows.push('    '.repeat(row.depth + 1) + restRows.pop());
+      restRows[restRows.length - 1] =
+        '    '.repeat(row.depth + 1) + restRows.at(-1);
 
       return [
         formStringStylish(' ', row.key, firstRow, row.depth),
