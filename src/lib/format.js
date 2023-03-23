@@ -41,14 +41,16 @@ const formStringStylish = (symbol, key, value, depth) =>
 const formatValueStylish = (input, depth) => {
   if (input === '') return '';
   if (!isObject(input)) return ' ' + String(input);
-  return (
+
+  const objAsText =
     ' ' +
     JSON.stringify(input, null, 4)
       .replaceAll('"', '')
       .replaceAll(',', '')
       .split('\n')
-      .join(`\n${'    '.repeat(depth + 1)}`)
-  );
+      .join(`\n${'    '.repeat(depth + 1)}`);
+
+  return objAsText;
 };
 
 const formatValuePlain = (entity) => {
@@ -56,6 +58,7 @@ const formatValuePlain = (entity) => {
   if (typeof entity === 'string') return `'${entity}'`;
   return entity;
 };
+
 const wasRemoved = (obj) =>
   Object.hasOwn(obj, 'old') && !Object.hasOwn(obj, 'new');
 
