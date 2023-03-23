@@ -76,7 +76,6 @@ const getAction = (obj) => {
 };
 
 const formatPlain = (diff, path = '') => {
-  console.log(diff, 'diff <=============');
   const out = diff.flatMap((row) => {
     if (row.unchenged)
       return isObject(row.old)
@@ -84,7 +83,6 @@ const formatPlain = (diff, path = '') => {
         : [];
     return `Property '${path + row.key}' was ${getAction(row)}`;
   });
-  console.log(out);
   return out;
 };
 
