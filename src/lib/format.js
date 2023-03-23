@@ -18,6 +18,7 @@ const formatStylish = (diff) => {
         ...restRows,
       ];
     }
+
     const out = [];
 
     if (Object.hasOwn(row, 'old'))
@@ -39,7 +40,7 @@ const formStringStylish = (symbol, key, value, depth) =>
   )}`;
 
 const formatValueStylish = (input, depth) => {
-  if (input === '') return '';
+  // if (input === '') return '';
   if (!isObject(input)) return ' ' + String(input);
 
   const objAsText =
