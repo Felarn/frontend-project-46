@@ -14,34 +14,31 @@ const formatStylish = (diff) => {
       }
 
       return [
-        `${'    '.repeat(row.depth + 1)}${row.key}: ${firstRow}`,
+        formStringStylish(' ', row.key, firstRow, row.depth),
         ...restRows,
       ];
     }
     const out = [];
 
     if (Object.hasOwn(row, 'old'))
-      out.push(
-        `${'    '.repeat(row.depth)}  - ${row.key}:${toString(
-          row.old,
-          row.depth
-        )}`
-      );
+      out.push(formStringStylish('-', row.key, row.old, row.depth));
 
     if (Object.hasOwn(row, 'new'))
-      out.push(
-        `${'    '.repeat(row.depth)}  + ${row.key}:${toString(
-          row.new,
-          row.depth
-        )}`
-      );
+      out.push(formStringStylish('+', row.key, row.new, row.depth));
+
     return out;
   });
 
   return ['{', ...output, '}'];
 };
 
-const toString = (input, depth) => {
+const formStringStylish = (symbol, key, value, depth) =>
+  `${'    '.repeat(depth)}  ${symbol} ${key}:${formatValueStylish(
+    value,
+    depth
+  )}`;
+
+const formatValueStylish = (input, depth) => {
   if (input === '') return '';
   if (!isObject(input)) return ' ' + String(input);
   return (
@@ -54,7 +51,7 @@ const toString = (input, depth) => {
   );
 };
 
-const formatValue = (entity) => {
+const formatValuePlain = (entity) => {
   if (isObject(entity)) return '[complex value]';
   if (typeof entity === 'string') return `'${entity}'`;
   return entity;
@@ -66,11 +63,12 @@ const wasAdded = (obj) =>
   !Object.hasOwn(obj, 'old') && Object.hasOwn(obj, 'new');
 
 const getAction = (obj) => {
-  'not changed'; // временно, не должно выдаваться ничего
   if (wasRemoved(obj)) return 'removed';
-  if (wasAdded(obj)) return `added with value: ${formatValue(obj.new)}`;
+  if (wasAdded(obj)) return `added with value: ${formatValuePlain(obj.new)}`;
 
-  return `updated. From ${formatValue(obj.old)} to ${formatValue(obj.new)}`;
+  return `updated. From ${formatValuePlain(obj.old)} to ${formatValuePlain(
+    obj.new
+  )}`;
 };
 
 const formatPlain = (diff, path = '') => {
