@@ -1,33 +1,26 @@
 import { isObject } from './utils.js';
 
-const formatStylish = (diff) => {
+const formatStylish = (diff, depth = 0) => {
   const output = diff.flatMap((row) => {
     if (isNode(row)) {
-      const [firstRow, ...restRows] = formatStylish(row.children);
-
-      restRows[restRows.length - 1] =
-        '    '.repeat(row.depth + 1) + restRows.at(-1);
-
-      return [
-        formStringStylish(' ', row.key, firstRow, row.depth),
-        ...restRows,
-      ];
+      const [firstRow, ...restRows] = formatStylish(row.children, depth + 1);
+      return [formStringStylish(' ', row.key, firstRow, depth), ...restRows];
     }
 
     const out = [];
     if (isStatus(row, 'unchanged'))
-      out.push(formStringStylish(' ', row.key, row.oldValue, row.depth));
+      out.push(formStringStylish(' ', row.key, row.oldValue, depth));
 
     if (isStatus(row, 'removed', 'changed'))
-      out.push(formStringStylish('-', row.key, row.oldValue, row.depth));
+      out.push(formStringStylish('-', row.key, row.oldValue, depth));
 
     if (isStatus(row, 'added', 'changed'))
-      out.push(formStringStylish('+', row.key, row.newValue, row.depth));
+      out.push(formStringStylish('+', row.key, row.newValue, depth));
 
     return out;
   });
-
-  return ['{', ...output, '}'];
+  const prefix = '    '.repeat(depth);
+  return ['{', ...output, prefix + '}'];
 };
 
 const isNode = (obj) => obj.type === 'node';
