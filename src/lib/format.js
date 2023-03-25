@@ -5,17 +5,20 @@ const formatStylish = (diff, depth = 0, ancesterKey = '') => {
     if (is.node(row))
       return formatStylish(row.children, depth + 1, `${row.key}: `);
 
-    const out = [];
     if (is.unchanged(row))
-      out.push(formStringStylish(' ', row.key, row.oldValue, depth));
+      return formStringStylish(' ', row.key, row.oldValue, depth);
 
-    if (is.removed(row) || is.changed(row))
-      out.push(formStringStylish('-', row.key, row.oldValue, depth));
+    if (is.removed(row))
+      return formStringStylish('-', row.key, row.oldValue, depth);
 
-    if (is.added(row) || is.changed(row))
-      out.push(formStringStylish('+', row.key, row.newValue, depth));
+    if (is.added(row))
+      return formStringStylish('+', row.key, row.newValue, depth);
 
-    return out;
+    if (is.changed(row))
+      return [
+        formStringStylish('-', row.key, row.oldValue, depth),
+        formStringStylish('+', row.key, row.newValue, depth),
+      ];
   });
   const prefix = '    '.repeat(depth) + ancesterKey + '{';
   const postfix = '    '.repeat(depth) + '}';
