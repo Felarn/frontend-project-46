@@ -20,6 +20,7 @@ const formatStylish = (diff, depth = 0, ancesterKey = '') => {
         formStringStylish('+', row.key, row.newValue, depth),
       ];
   });
+
   const prefix = '    '.repeat(depth) + ancesterKey + '{';
   const postfix = '    '.repeat(depth) + '}';
   return [prefix, ...output, postfix];
