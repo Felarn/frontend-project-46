@@ -1,32 +1,64 @@
 import is from './utils.js';
 
-const formatStylish = (diff, depth = 0, ancesterKey = '') => {
-  const output = diff.flatMap((row) => {
-    if (is.node(row))
-      return formatStylish(row.children, depth + 1, `${row.key}: `);
-
-    if (is.unchanged(row))
-      return formStringStylish(' ', row.key, row.oldValue, depth);
-
-    if (is.removed(row))
-      return formStringStylish('-', row.key, row.oldValue, depth);
-
-    if (is.added(row))
-      return formStringStylish('+', row.key, row.newValue, depth);
-
-    if (is.changed(row))
-      return [
-        formStringStylish('-', row.key, row.oldValue, depth),
-        formStringStylish('+', row.key, row.newValue, depth),
-      ];
-  });
-
-  const prefix = '    '.repeat(depth) + ancesterKey + '{';
-  const postfix = '    '.repeat(depth) + '}';
-  return [prefix, ...output, postfix];
+const doFormatting = (diff, formatStyle) => {
+  const format = formats[formatStyle];
+  return fromatter(diff, format, format.initAccumulator);
 };
 
-const formStringStylish = (symbol, key, Value, depth) =>
+const fromatter = (diff, format, accumulator = null) => {
+  const output = diff.flatMap((line) => {
+    if (is.node(line)) return format.node(line, format, accumulator);
+    return format[line.status](line, accumulator);
+  });
+  return format.output(output, accumulator);
+};
+
+const stylish = {
+  initAccumulator: { depth: 0, ancesterKey: '' },
+  node: ({ children, key }, format, { depth }) =>
+    fromatter(children, format, { depth: depth + 1, ancesterKey: `${key}: ` }),
+
+  unchanged: ({ key, oldValue }, { depth }) =>
+    makeStrStylish(' ', key, oldValue, depth),
+
+  removed: ({ key, oldValue }, { depth }) =>
+    makeStrStylish('-', key, oldValue, depth),
+
+  added: ({ key, newValue }, { depth }) =>
+    makeStrStylish('+', key, newValue, depth),
+
+  changed: ({ key, oldValue, newValue }, { depth }) => [
+    makeStrStylish('-', key, oldValue, depth),
+    makeStrStylish('+', key, newValue, depth),
+  ],
+
+  output: (data, { depth, ancesterKey }) => {
+    const prefix = '    '.repeat(depth) + ancesterKey + '{';
+    const postfix = '    '.repeat(depth) + '}';
+    return [prefix, ...data, postfix];
+  },
+};
+
+const plain = {
+  initAccumulator: '',
+  node: ({ children, key }, format, path) =>
+    fromatter(children, format, `${path}${key}.`),
+  unchanged: () => [],
+  removed: ({ key }, path) => `Property '${path}${key}' was removed`,
+  added: ({ key, newValue }, path) =>
+    `Property '${path}${key}' was added with value: ${formatValuePlain(
+      newValue
+    )}`,
+  changed: ({ key, oldValue, newValue }, path) =>
+    `Property '${path}${key}' was updated. From ${formatValuePlain(
+      oldValue
+    )} to ${formatValuePlain(newValue)}`,
+  output: (data) => data,
+};
+
+const formats = { stylish, plain };
+
+const makeStrStylish = (symbol, key, Value, depth) =>
   `${'    '.repeat(depth)}  ${symbol} ${key}: ${formatValueStylish(
     Value,
     depth
@@ -47,31 +79,7 @@ const formatValuePlain = (entity) => {
   return entity;
 };
 
-const getAction = (obj) => {
-  switch (obj.status) {
-    case 'removed':
-      return 'removed';
-    case 'added':
-      return `added with value: ${formatValuePlain(obj.newValue)}`;
-    case 'changed':
-      return `updated. From ${formatValuePlain(
-        obj.oldValue
-      )} to ${formatValuePlain(obj.newValue)}`;
-    default:
-      return [];
-  }
-};
-
-const formatPlain = (diff, path = '') => {
-  const out = diff.flatMap((row) => {
-    if (is.node(row)) return formatPlain(row.children, path + row.key + '.');
-    if (!is.unchanged(row))
-      return `Property '${path + row.key}' was ${getAction(row)}`;
-    return [];
-  });
-  return out;
-};
-
 const formatJson = (diff) => JSON.stringify(diff);
 
-export default { stylish: formatStylish, plain: formatPlain, json: formatJson };
+// export default { stylish: formatStylish, plain: formatPlain, json: formatJson };
+export default doFormatting;
