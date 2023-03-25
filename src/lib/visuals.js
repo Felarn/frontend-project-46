@@ -11,7 +11,7 @@ export const textColor = {
 };
 
 const stylishColorScheme = {
-  node: ({ children }, format) => formatter(children, format),
+  node: ({ children }, colorSchemes) => formatter(children, colorSchemes),
   unchanged: () => textColor.white,
   added: () => textColor.green,
   removed: () => textColor.red,
@@ -20,7 +20,7 @@ const stylishColorScheme = {
 };
 
 const plainColorScheme = {
-  node: ({ children }, format) => formatter(children, format),
+  node: ({ children }, colorSchemes) => formatter(children, colorSchemes),
   unchanged: () => [],
   added: () => textColor.green,
   removed: () => textColor.red,
@@ -31,13 +31,15 @@ const plainColorScheme = {
 const colorSchemes = { stylish: stylishColorScheme, plain: plainColorScheme };
 
 export const getColorTags = (diff, formatStyle) => {
+  if (!Object.hasOwn(colorSchemes, formatStyle)) return [];
   return formatter(diff, colorSchemes[formatStyle]);
 };
 
 export const display = (formattedDiff, colorTags) => {
   const colorize = (formattedDiff, colorTable) =>
     formattedDiff.map(
-      (row, index) => colorTable[index] + row + textColor.white
+      (row, index) =>
+        `${colorTable[index] ?? textColor.white}${row}${textColor.white}`
     );
 
   console.log(colorize(formattedDiff, colorTags).join('\n'));

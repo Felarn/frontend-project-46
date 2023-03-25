@@ -7,7 +7,7 @@ const getStatus = (obj1, obj2, key) => {
   return 'changed';
 };
 
-const getDiff = (obj1, obj2, depth = 0) =>
+const getDiff = (obj1, obj2) =>
   Object.keys({ ...obj1, ...obj2 })
     .sort()
     .map((key) => {
@@ -15,7 +15,7 @@ const getDiff = (obj1, obj2, depth = 0) =>
         return {
           key,
           type: 'node',
-          children: getDiff(obj1[key], obj2[key], depth + 1),
+          children: getDiff(obj1[key], obj2[key]),
         };
 
       return {
