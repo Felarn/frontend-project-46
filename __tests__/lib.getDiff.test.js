@@ -11,5 +11,5 @@ const obj1 = getObjFromFile(pathFile1);
 const obj2 = getObjFromFile(pathFile2);
 
 test('generation of Diff obj', () => {
-  // expect(getDiff(obj1, obj2)).toEqual(expectedResult);
+  expect(getDiff(obj1, obj2)).toEqual(expectedResult);
 });

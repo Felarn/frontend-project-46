@@ -1,7 +1,7 @@
 [
-    {"depth": 0, "key": "follow", "old": false, "unchenged": false},
-    {"depth": 0, "key": "host", "new": "hexlet.io", "old": "hexlet.io", "unchenged": true},
-    {"depth": 0, "key": "proxy", "old": "123.234.53.22", "unchenged": false},
-    {"depth": 0, "key": "timeout", "new": 20, "old": 50, "unchenged": false},
-    {"depth": 0, "key": "verbose", "new": true,  "unchenged": false}
+    { "key": "follow", "oldValue": false, "status": "removed", "type": "terminal"},
+    { "key": "host", "newValue": "hexlet.io", "oldValue": "hexlet.io", "status": "unchanged", "type": "terminal"},
+    { "key": "proxy",  "oldValue": "123.234.53.22", "status": "removed", "type": "terminal"},
+    { "key": "timeout", "newValue": 20, "oldValue": 50, "status": "changed", "type": "terminal"}, 
+    { "key": "verbose", "newValue": true, "status": "added", "type": "terminal"}
 ]
