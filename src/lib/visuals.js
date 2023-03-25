@@ -38,8 +38,7 @@ export const getColorTags = (diff, formatStyle) => {
 export const display = (formattedDiff, colorTags) => {
   const colorize = (formattedDiff, colorTable) =>
     formattedDiff.map(
-      (row, index) =>
-        `${colorTable[index] ?? textColor.white}${row}${textColor.white}`
+      (row, index) => `${textColor.white}${row}${textColor.white}`
     );
 
   console.log(colorize(formattedDiff, colorTags).join('\n'));
