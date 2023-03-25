@@ -1,22 +1,15 @@
 import is from './utils.js';
+import formatter from './formatter.js';
 
 const doFormatting = (diff, formatStyle) => {
   const format = formats[formatStyle];
-  return fromatter(diff, format, format.initAccumulator);
-};
-
-const fromatter = (diff, format, accumulator = null) => {
-  const output = diff.flatMap((line) => {
-    if (is.node(line)) return format.node(line, format, accumulator);
-    return format[line.status](line, accumulator);
-  });
-  return format.output(output, accumulator);
+  return formatter(diff, format, format.initAccumulator);
 };
 
 const stylish = {
   initAccumulator: { depth: 0, ancesterKey: '' },
   node: ({ children, key }, format, { depth }) =>
-    fromatter(children, format, { depth: depth + 1, ancesterKey: `${key}: ` }),
+    formatter(children, format, { depth: depth + 1, ancesterKey: `${key}: ` }),
 
   unchanged: ({ key, oldValue }, { depth }) =>
     makeStrStylish(' ', key, oldValue, depth),
@@ -42,7 +35,7 @@ const stylish = {
 const plain = {
   initAccumulator: '',
   node: ({ children, key }, format, path) =>
-    fromatter(children, format, `${path}${key}.`),
+    formatter(children, format, `${path}${key}.`),
   unchanged: () => [],
   removed: ({ key }, path) => `Property '${path}${key}' was removed`,
   added: ({ key, newValue }, path) =>

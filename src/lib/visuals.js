@@ -1,3 +1,5 @@
+import formatter from './formatter.js';
+
 export const textColor = {
   red: '\x1b[31m',
   green: '\x1b[32m',
@@ -8,22 +10,37 @@ export const textColor = {
   white: '\x1b[0m',
 };
 
-const stylish = (formattedDiff) =>
-  formattedDiff.flatMap((row) => {
-    if (row.trim()[0] === '-') return 'red';
-    if (row.trim()[0] === '+') return 'green';
-    return 'white';
-  });
+const stylishColorScheme = {
+  node: ({ children }, format) => formatter(children, format),
+  unchanged: () => textColor.white,
+  added: () => textColor.green,
+  removed: () => textColor.red,
+  changed: () => [textColor.yellow, textColor.yellow],
+  output: (data) => [textColor.white, ...data, textColor.white],
+};
 
-const flat = (diff) => {};
+const plainColorScheme = {
+  node: ({ children }, format) => formatter(children, format),
+  unchanged: () => [],
+  added: () => textColor.green,
+  removed: () => textColor.red,
+  changed: () => textColor.white,
+  output: (data) => data,
+};
 
-const colorize = (formattedDiff, colorTable) =>
-  formattedDiff.map(
-    (row, index) => textColor[colorTable[index]] + row + textColor.white
-  );
+const colorSchemes = { stylish: stylishColorScheme, plain: plainColorScheme };
+
+export const getColorTags = (diff, formatStyle) => {
+  return formatter(diff, colorSchemes[formatStyle]);
+};
 
 export const display = (formattedDiff, colorTags) => {
+  const colorize = (formattedDiff, colorTable) =>
+    formattedDiff.map(
+      (row, index) => colorTable[index] + row + textColor.white
+    );
+
   console.log(colorize(formattedDiff, colorTags).join('\n'));
 };
 
-export const getColorTags = { stylish, flat };
+// export default getColorTags;
