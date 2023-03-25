@@ -7,24 +7,24 @@ const getStatus = (obj1, obj2, key) => {
   return 'changed';
 };
 
-const getDiff = (obj1, obj2) =>
-  Object.keys({ ...obj1, ...obj2 })
-    .sort()
-    .map((key) => {
-      if (is.object(obj1[key]) && is.object(obj2[key]))
-        return {
-          key,
-          type: 'node',
-          children: getDiff(obj1[key], obj2[key]),
-        };
-
+const getDiff = (obj1, obj2) => Object.keys({ ...obj1, ...obj2 })
+  .sort()
+  .map((key) => {
+    if (is.object(obj1[key]) && is.object(obj2[key])) {
       return {
         key,
-        type: 'terminal',
-        status: getStatus(obj1, obj2, key),
-        oldValue: obj1[key],
-        newValue: obj2[key],
+        type: 'node',
+        children: getDiff(obj1[key], obj2[key]),
       };
-    });
+    }
+
+    return {
+      key,
+      type: 'terminal',
+      status: getStatus(obj1, obj2, key),
+      oldValue: obj1[key],
+      newValue: obj2[key],
+    };
+  });
 
 export default getDiff;

@@ -1,6 +1,6 @@
 import path from 'node:path';
-import readFile from './readFile.js';
 import YML from 'js-yaml';
+import readFile from './readFile.js';
 
 export default (filePath) => {
   const ext = path.extname(filePath);
