@@ -1,6 +1,0 @@
-{
-    "timeout": 20,
-    "verbose": true,
-    "host": "hexlet.io",
-    "obj":{"key1":4,"key2":3}
-  }
