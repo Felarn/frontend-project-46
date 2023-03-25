@@ -15,11 +15,13 @@ const file_2 = 'file2';
 const fileEmpt = 'empty';
 const style = 'stylish';
 const plain = 'plain';
+const styleJson = 'json';
 
 // ========= файлы с ожидаемымыи результатами =====
 const expSimple_1_1 = 'simple_1_1.txt';
 const expSimple_1_2 = 'simple_1_2.txt';
 const expSimple_2_1 = 'simple_2_1.txt';
+const json_1_2 = 'json_1_2.txt';
 const expSimple_empty_1 = 'simple_empty_1.txt';
 const expSimple_1_empty = 'simple_1_empty.txt';
 const exp_empty_empty = 'empty_empty.txt';
@@ -38,6 +40,8 @@ const cases = [
 
   [simpleDir, file_1, simpleDir, file_2, plainDir, expSimple_1_2, plain],
   [nestedDir, file_1, nestedDir, file_2, plainDir, expNested_1_2, plain],
+
+  [nestedDir, file_1, nestedDir, file_2, plainDir, json_1_2, styleJson],
 ];
 const extesions = [extJSON, extYML, extYAML];
 

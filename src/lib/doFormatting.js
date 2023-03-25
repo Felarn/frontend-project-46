@@ -2,8 +2,15 @@ import is from './utils.js';
 import formatter from './formatter.js';
 
 const doFormatting = (diff, formatStyle) => {
-  const format = formats[formatStyle];
-  return formatter(diff, format, format.initAccumulator);
+  switch (formatStyle) {
+    case 'json':
+      return formatJson(diff);
+    case 'plain':
+      return formatter(diff, plain, plain.initAccumulator);
+    case 'stylish':
+    default:
+      return formatter(diff, stylish, stylish.initAccumulator);
+  }
 };
 
 const stylish = {
@@ -72,7 +79,7 @@ const formatValuePlain = (entity) => {
   return entity;
 };
 
-const formatJson = (diff) => JSON.stringify(diff);
+const formatJson = (diff) => [JSON.stringify(diff)];
 
 // export default { stylish: formatStylish, plain: formatPlain, json: formatJson };
 export default doFormatting;
