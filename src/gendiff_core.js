@@ -7,7 +7,6 @@ export default function gendiff(path1, path2, formatStyle = 'stylish') {
   const obj1 = getObjFromFile(path1);
   const obj2 = getObjFromFile(path2);
   const diff = getDiff(obj1, obj2);
-  console.log(diff);
   const formattedDiff = doFormatting(diff, formatStyle);
 
   const colorTags = getColorTags(diff, formatStyle);
