@@ -1,53 +1,44 @@
-import { isObject } from './utils.js';
+import is from './utils.js';
 
-const formatStylish = (diff, depth = 0) => {
+const formatStylish = (diff, depth = 0, ancesterKey = '') => {
   const output = diff.flatMap((row) => {
-    if (isNode(row)) {
-      const [firstRow, ...restRows] = formatStylish(row.children, depth + 1);
-      return [formStringStylish(' ', row.key, firstRow, depth), ...restRows];
-    }
+    if (is.node(row))
+      return formatStylish(row.children, depth + 1, `${row.key}: `);
 
     const out = [];
-    if (isStatus(row, 'unchanged'))
+    if (is.unchanged(row))
       out.push(formStringStylish(' ', row.key, row.oldValue, depth));
 
-    if (isStatus(row, 'removed', 'changed'))
+    if (is.removed(row) || is.changed(row))
       out.push(formStringStylish('-', row.key, row.oldValue, depth));
 
-    if (isStatus(row, 'added', 'changed'))
+    if (is.added(row) || is.changed(row))
       out.push(formStringStylish('+', row.key, row.newValue, depth));
 
     return out;
   });
-  const prefix = '    '.repeat(depth);
-  return ['{', ...output, prefix + '}'];
+  const prefix = '    '.repeat(depth) + ancesterKey + '{';
+  const postfix = '    '.repeat(depth) + '}';
+  return [prefix, ...output, postfix];
 };
 
-const isNode = (obj) => obj.type === 'node';
-const isStatus = (obj, ...states) => states.includes(obj.status);
-
 const formStringStylish = (symbol, key, Value, depth) =>
-  `${'    '.repeat(depth)}  ${symbol} ${key}:${formatValueStylish(
+  `${'    '.repeat(depth)}  ${symbol} ${key}: ${formatValueStylish(
     Value,
     depth
   )}`;
 
 const formatValueStylish = (input, depth) => {
-  if (!isObject(input)) return ' ' + String(input);
-
-  const objAsText =
-    ' ' +
-    JSON.stringify(input, null, 4)
-      .replaceAll('"', '')
-      .replaceAll(',', '')
-      .split('\n')
-      .join(`\n${'    '.repeat(depth + 1)}`);
-
-  return objAsText;
+  if (!is.object(input)) return String(input);
+  return JSON.stringify(input, null, 4)
+    .replaceAll('"', '')
+    .replaceAll(',', '')
+    .split('\n')
+    .join(`\n${'    '.repeat(depth + 1)}`);
 };
 
 const formatValuePlain = (entity) => {
-  if (isObject(entity)) return '[complex value]';
+  if (is.object(entity)) return '[complex value]';
   if (typeof entity === 'string') return `'${entity}'`;
   return entity;
 };
@@ -69,8 +60,8 @@ const getAction = (obj) => {
 
 const formatPlain = (diff, path = '') => {
   const out = diff.flatMap((row) => {
-    if (isNode(row)) return formatPlain(row.children, path + row.key + '.');
-    if (row.status !== 'unchanged')
+    if (is.node(row)) return formatPlain(row.children, path + row.key + '.');
+    if (!is.unchanged(row))
       return `Property '${path + row.key}' was ${getAction(row)}`;
     return [];
   });
