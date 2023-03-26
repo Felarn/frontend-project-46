@@ -18,4 +18,4 @@ program
     gendiffСore(filepath1, filepath2, format);
   });
 
-export default program.parse();
+export default () => program.parse();

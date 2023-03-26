@@ -6,6 +6,6 @@ const fixturesPath = path.resolve(
   '../../../__fixtures__',
 );
 
-const getFixturePath = (...parts) => path.resolve(fixturesPath, ...parts);
+const getFixturePath = (parts) => path.resolve(fixturesPath, ...parts);
 
 export default getFixturePath;

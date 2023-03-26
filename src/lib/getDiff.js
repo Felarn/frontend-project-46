@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import is from './utils.js';
 
 const getStatus = (obj1, obj2, key) => {
@@ -7,8 +8,7 @@ const getStatus = (obj1, obj2, key) => {
   return 'changed';
 };
 
-const getDiff = (obj1, obj2) => Object.keys({ ...obj1, ...obj2 })
-  .sort()
+const getDiff = (obj1, obj2) => _.sortBy(Object.keys({ ...obj1, ...obj2 }))
   .map((key) => {
     if (is.object(obj1[key]) && is.object(obj2[key])) {
       return {

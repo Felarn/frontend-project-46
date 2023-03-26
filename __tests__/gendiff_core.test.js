@@ -33,9 +33,9 @@ describe.each(extesions)('from %s-file', (ext1) => {
     test.each(cases)(
       'from: %s/%s to --> %s/%s \n\texpected output: %s/%s',
       (file1, file2, expFile, format) => {
-        const path1 = getFixturePath(inputDir, file1 + ext1);
-        const path2 = getFixturePath(inputDir, file2 + ext2);
-        const expectations = readFile(getFixturePath(resultDir, expFile));
+        const path1 = getFixturePath([inputDir, file1 + ext1]);
+        const path2 = getFixturePath([inputDir, file2 + ext2]);
+        const expectations = readFile(getFixturePath([resultDir, expFile]));
         expect(gendiff(path1, path2, format)).toEqual(expectations);
       },
     );
