@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import is from './utils.js';
 
 const getStatus = (obj1, obj2, key) => {
   if (!Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) return 'added';
@@ -10,7 +9,7 @@ const getStatus = (obj1, obj2, key) => {
 
 const getDiff = (obj1, obj2) => _.sortBy(Object.keys({ ...obj1, ...obj2 }))
   .map((key) => {
-    if (is.object(obj1[key]) && is.object(obj2[key])) {
+    if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
       return {
         key,
         type: 'node',

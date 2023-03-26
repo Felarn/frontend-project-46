@@ -1,5 +1,5 @@
 import { program } from 'commander';
-import gendiffСore from './gendiff_core.js';
+import gendiff from './gendiff_core.js';
 import getTextFromFile from './lib/readFile.js';
 
 const { version } = JSON.parse(getTextFromFile('package.json'));
@@ -14,8 +14,8 @@ program
     if (!['stylish', 'plain', 'json'].includes(format)) {
       throw new Error('Incorrect format option');
     }
-
-    gendiffСore(filepath1, filepath2, format);
+    const formattedDiff = gendiff(filepath1, filepath2, format);
+    console.log(formattedDiff);
   });
 
 export default () => program.parse();
