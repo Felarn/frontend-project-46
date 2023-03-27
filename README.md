@@ -31,15 +31,15 @@ make install
 
 # Использование
 
-```
+```diff
 $ gendiff -h
 Usage: gendiff [options] <filepath1> <filepath2>
 
 Compares two configuration files and shows a difference.
 
 Options:
-  -V, --version       output the version number
-  -c --colorize       colorize terminal output
+-  -V, --version       output the version number
+!  -c --colorize       colorize terminal output
   -f --format <type>  output format
   -h, --help          display help for command
 ```
@@ -79,7 +79,7 @@ Options:
         <tr>
             <td>удаление</td>
             <td style="color: red;"><span style="color: red;">красный</span></td>
-            <td style="color: red;">красный</td>
+            <td style="color: red;">```-красный```</td>
             <td rowspan="4">белый</td>
         </tr>
         <tr>
