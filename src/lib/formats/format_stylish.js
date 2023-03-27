@@ -38,6 +38,6 @@ const formatStylish = {
   },
 };
 
-const stylish = (diff) => formatter(diff, formatStylish, formatStylish.initAccumulator).join('\n');
+const stylish = (diff) => formatter(diff, formatStylish, formatStylish.initAccumulator);
 
 export default stylish;

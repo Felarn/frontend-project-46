@@ -21,5 +21,5 @@ const formatPlain = {
   output: (data) => data,
 };
 
-const plain = (diff) => formatter(diff, formatPlain, formatPlain.initAccumulator).join('\n');
+const plain = (diff) => formatter(diff, formatPlain, formatPlain.initAccumulator);
 export default plain;
