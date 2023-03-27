@@ -48,3 +48,9 @@ Options:
   -f --format <type>  output format
   -h, --help          display help for command
 ```
+
+[![asciicast](https://asciinema.org/a/570675.svg)](https://asciinema.org/a/570675)
+
+[![asciicast](https://asciinema.org/a/D8vQC1kuM9omCXzkUuRgdhyE6.svg)](https://asciinema.org/a/D8vQC1kuM9omCXzkUuRgdhyE6)
+
+[![asciicast](https://asciinema.org/a/570685.svg)](https://asciinema.org/a/570685)
