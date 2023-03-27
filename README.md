@@ -31,11 +31,6 @@ make install
 
 # Использование
 
-принимает опции:
--f --format - формат вывода отчета. Принимает значения: -stylish - значение по умолчанию, структурированный вывод. -plain - вывод текствового отчета в котором упоминаются только изменившиеся/удаленные/добавленные ключи. -json - вывод в виде строки json формата.
-
--c --colorize - флаг для выделения изменений цветом. По умолчанию отключен. Цвета для формата stylish: удаленные ключи - красный, измененные - желтый, добавленные - зеленый, неизменные ключи - белый. Для формата plain: удаленные ключи - красный, добавленные - зеленый, измененные - белый. Формат json не раскрашивается.
-
 ```
 $ gendiff -h
 Usage: gendiff [options] <filepath1> <filepath2>
@@ -49,8 +44,85 @@ Options:
   -h, --help          display help for command
 ```
 
+Утилита принимает следующие аргументы:
+<dl>
+ <dt> -f --format</dt> 
+ <dd> 
+    Формат вывода отчета. Возможные значения:
+    <dl>
+        <dt>-stylish (значение по умолчанию)</dt>
+        <dd>
+            Cтруктурированный вывод. <a href="#anchor-stylish" >Пример -></a>
+        </dd>
+        <dt>-plain</dt>
+        <dd>
+            Текствовый отчет с перечислением только изменившихся/удаленных/добавленных ключе.<a href="#anchor-plain" >Пример -></a>
+        </dd>
+        <dt>-json</dt>
+        <dd>
+            Вывод в виде строки json формата. <a href="#anchor-json" >Пример -></a>
+        </dd>
+    </dl>
+</dt>
+<dt>
+    -c --colorize   
+</dt>
+<dd>
+    Флаг для раскраски вывода в терминал в зависимости от изменений внесенных в ключ. По умолчанию раскраска отключена отключен.
+    <table style="width: 100%; border: 1px solid;border-collapse:collapse;text-align: center;">
+        <head>
+            <th style="border: 1px solid; "></th>
+            <th style="border: 1px solid;">stylish</th>
+            <th style="border: 1px solid;">plain</th>
+            <th style="border: 1px solid;">json</th>
+        </head>
+        <tr>
+            <td>удаление</td>
+            <td style="color: red;">красный</td>
+            <td style="color: red;">красный</td>
+            <td rowspan="4">белый</td>
+        </tr>
+        <tr>
+            <td>изменение</td>
+            <td style="color: yellow;">желтый</td>
+            <td>белый</td>
+        </tr>
+        <tr>
+            <td>добавление</td>
+            <td style="color: green">зеленый</td>
+            <td style="color: green">зеленый</td>
+        </tr>
+        <tr>
+            <td>без изменений</td>
+            <td>белый</td>
+            <td>-</td>
+        </tr>
+    </table>
+
+</dd>
+
+<dt>path1 и path2</dt>
+<dd>Адреса файлов для сравнения. Можно использовать как абсолютные так и относительные пути. Поддерживаются форматы .json, .yaml и .yml</dd>
+
+</dl>
+
+#Демонстрация использования
+
+<p id="anchor-stylish" ></p>
+
+### stylish
+
 [![asciicast](https://asciinema.org/a/570675.svg)](https://asciinema.org/a/570675)
 
+<p id="anchor-plain" ></p>
+
+### plain
+
 [![asciicast](https://asciinema.org/a/D8vQC1kuM9omCXzkUuRgdhyE6.svg)](https://asciinema.org/a/D8vQC1kuM9omCXzkUuRgdhyE6)
+
+
+<p id="anchor-json" ></p>
+
+### JSON
 
 [![asciicast](https://asciinema.org/a/570685.svg)](https://asciinema.org/a/570685)
