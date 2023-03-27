@@ -78,7 +78,7 @@ Options:
         </head>
         <tr>
             <td>удаление</td>
-            <td style="color: red;">красный</td>
+            <td style="color: red;"><span style="color: red;">красный</span></td>
             <td style="color: red;">красный</td>
             <td rowspan="4">белый</td>
         </tr>
@@ -106,7 +106,7 @@ Options:
 </dl>
 
 
-#Демонстрация использования
+# Демонстрации
 
 <p id="anchor-stylish" ></p>
 
