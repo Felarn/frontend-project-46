@@ -9,7 +9,7 @@
 
 # Описание
 Это второй учебный проект от Hexlet - "Вычислитель различий" - программа, определяющая разницу между двумя структурами данных.
-$${\color{red}Red}$$
+
 В ходные данные читатются из файлов с расширением .json, .yaml или .yml. Вывод производится в консоль с возможностью выделения изменений цветом. 
 Отчет можно формировать в виде текстового описания изменений, структурированного вывода или строки в json-формате. Подробнее в разделе <a href="#game-description" >Использование -></a>
 
@@ -71,26 +71,26 @@ Options:
     Флаг для раскраски вывода в терминал в зависимости от изменений внесенных в ключ. По умолчанию раскраска отключена отключен.
     <table style="width: 100%; border: 1px solid;border-collapse:collapse;text-align: center;">
         <head>
-            <th style="border: 1px solid; "></th>
-            <th style="border: 1px solid;">stylish</th>
-            <th style="border: 1px solid;">plain</th>
-            <th style="border: 1px solid;">json</th>
+            <th></th>
+            <th>stylish</th>
+            <th>plain</th>
+            <th>json</th>
         </head>
         <tr>
             <td>удаление</td>
-            <td style="color: red;"><span style="color: red;">$${\color{red}Red}$$</span></td>
-            <td style="color: red;">красный</td>
+            <td>$${\color{Red}красный}$$</td>
+            <td>$${\color{Red}красный}$$</td>
             <td rowspan="4">белый</td>
         </tr>
         <tr>
             <td>изменение</td>
-            <td style="color: yellow;">желтый</td>
+            <td style="color: yellow;">$${\color{yellow}желтый}$$</td>
             <td>белый</td>
         </tr>
         <tr>
             <td>добавление</td>
-            <td style="color: green">зеленый</td>
-            <td style="color: green">зеленый</td>
+            <td style="color: green">$${\color{lightgreen}зеленый}$$</td>
+            <td style="color: green">$${\color{lightgreen}зеленый}$$</td>
         </tr>
         <tr>
             <td>без изменений</td>
