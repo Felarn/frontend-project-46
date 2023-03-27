@@ -10,36 +10,8 @@
 # Описание
 Это второй учебный проект от Hexlet - "Вычислитель различий" - программа, определяющая разницу между двумя структурами данных.
 
-Возможности утилиты:
-Поддержка разных входных форматов: yaml, json
-Генерация отчета в виде plain text, stylish и json
-
-Пример использования:
-```
-# формат plain
-gendiff --format plain path/to/file.yml another/path/file.json
-
-Property 'common.follow' was added with value: false
-Property 'group1.baz' was updated. From 'bas' to 'bars'
-Property 'group2' was removed
-
-# формат stylish
-gendiff filepath1.json filepath2.json
-
-{
-  + follow: false
-    setting1: Value 1
-  - setting2: 200
-  - setting3: true
-  + setting3: {
-        key: value
-    }
-  + setting4: blah blah
-  + setting5: {
-        key5: value5
-    }
-}
-```
+В ходные данные читатются из файлов с расширением .json, .yaml или .yml. Вывод производится в консоль с возможностью выделения изменений цветом. 
+Отчет можно формировать в виде текстового описания изменений, структурированного вывода или строки в json-формате. Подробнее в разделе <a href="#game-description" >Использование -></a>
 
 # Установка
 <ol>
@@ -54,3 +26,25 @@ make install
 ```
 
 [![asciicast](https://asciinema.org/a/570608.svg)](https://asciinema.org/a/570608)
+
+<p id="game-description" ></p>
+
+# Использование
+
+принимает опции:
+-f --format - формат вывода отчета. Принимает значения: -stylish - значение по умолчанию, структурированный вывод. -plain - вывод текствового отчета в котором упоминаются только изменившиеся/удаленные/добавленные ключи. -json - вывод в виде строки json формата.
+
+-c --colorize - флаг для выделения изменений цветом. По умолчанию отключен. Цвета для формата stylish: удаленные ключи - красный, измененные - желтый, добавленные - зеленый, неизменные ключи - белый. Для формата plain: удаленные ключи - красный, добавленные - зеленый, измененные - белый. Формат json не раскрашивается.
+
+```
+$ gendiff -h
+Usage: gendiff [options] <filepath1> <filepath2>
+
+Compares two configuration files and shows a difference.
+
+Options:
+  -V, --version       output the version number
+  -c --colorize       colorize terminal output
+  -f --format <type>  output format
+  -h, --help          display help for command
+```
