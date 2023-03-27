@@ -40,3 +40,17 @@ gendiff filepath1.json filepath2.json
     }
 }
 ```
+
+# Установка
+<ol>
+    <li>Склонировать репозиторий</li>
+    <li>Выполнить команду make install</li>
+</ol>
+
+```
+git clone git@github.com:Felarn/frontend-project-46.git
+cd frontend-project-46/
+make install
+```
+
+[![asciicast](https://asciinema.org/a/570608.svg)](https://asciinema.org/a/570608)
