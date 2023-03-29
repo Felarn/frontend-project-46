@@ -1,8 +1,7 @@
 import textColor from './textColor.js';
-import formatter from '../../formatter/formatter.js';
 
 const stylishColorScheme = {
-  node: ({ children }, colorSchemes) => formatter(children, colorSchemes),
+  node: () => {},
   unchanged: () => textColor.white,
   added: () => textColor.green,
   removed: () => textColor.red,
