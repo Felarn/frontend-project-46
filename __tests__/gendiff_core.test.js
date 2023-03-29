@@ -36,7 +36,7 @@ const extesions = [extJSON, extYML, extYAML];
 const colorizeCases = [true, false];
 
 // ============ тесты ======================================
-describe.each(colorizeCases)('colorful output is %b', (colorize) => {
+describe.each(colorizeCases)('colorful output is %p', (colorize) => {
   describe.each(extesions)('from %s-file', (ext1) => {
     describe.each(extesions)('to %s-file', (ext2) => {
       test.each(cases)(

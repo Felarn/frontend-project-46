@@ -10,7 +10,7 @@ const formatValuePlain = (entity) => {
 const formatPlain = {
   initAccumulator: '',
   accumulator: ({ key }, path) => `${path}${key}.`,
-  unchanged: () => [],
+  unchanged: () => {},
   removed: ({ key }, path) => `Property '${path}${key}' was removed`,
   added: ({ key, newValue }, path) => `Property '${path}${key}' was `
     + `added with value: ${formatValuePlain(newValue)}`,

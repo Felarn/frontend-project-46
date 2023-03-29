@@ -11,11 +11,13 @@ program
   .option('-f --format <type>', 'output format')
   .arguments('filepath1 filepath2')
   .action((filepath1, filepath2, options) => {
+    const colorize = options.colorize ?? false;
     const format = options.format ?? 'stylish';
+
     if (!['stylish', 'plain', 'json'].includes(format)) {
       throw new Error('Incorrect format option');
     }
-    const colorize = options.colorize ?? false;
+
     gendiff(filepath1, filepath2, format, colorize);
   });
 
