@@ -18,7 +18,7 @@ const makeStringStylish = (symbol, key, Value, depth) => `${
 
 const formatStylish = {
   initAccumulator: { depth: 0, ancesterKey: '' },
-  node: ({ key }, { depth }) => ({ depth: depth + 1, ancesterKey: `${key}: ` }),
+  accumulator: ({ key }, { depth }) => ({ depth: depth + 1, ancesterKey: `${key}: ` }),
   unchanged: ({ key, oldValue }, { depth }) => makeStringStylish(' ', key, oldValue, depth),
   removed: ({ key, oldValue }, { depth }) => makeStringStylish('-', key, oldValue, depth),
   added: ({ key, newValue }, { depth }) => makeStringStylish('+', key, newValue, depth),

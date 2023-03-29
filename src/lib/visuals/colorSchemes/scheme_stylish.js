@@ -1,7 +1,7 @@
 import textColor from './textColor.js';
 
 const stylishColorScheme = {
-  node: () => {},
+  accumulator: () => {},
   unchanged: () => textColor.white,
   added: () => textColor.green,
   removed: () => textColor.red,

@@ -1,7 +1,7 @@
 import textColor from './textColor.js';
 
 const plainColorScheme = {
-  node: () => {},
+  accumulator: () => {},
   unchanged: () => {},
   added: () => textColor.green,
   removed: () => textColor.red,
