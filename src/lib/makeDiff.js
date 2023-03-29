@@ -7,13 +7,13 @@ const getStatus = (obj1, obj2, key) => {
   return 'changed';
 };
 
-const getDiff = (obj1, obj2) => _.sortBy(Object.keys({ ...obj1, ...obj2 }))
+const makeDiff = (obj1, obj2) => _.sortBy(Object.keys({ ...obj1, ...obj2 }))
   .map((key) => {
     if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
       return {
         key,
         type: 'node',
-        children: getDiff(obj1[key], obj2[key]),
+        children: makeDiff(obj1[key], obj2[key]),
       };
     }
 
@@ -26,4 +26,4 @@ const getDiff = (obj1, obj2) => _.sortBy(Object.keys({ ...obj1, ...obj2 }))
     };
   });
 
-export default getDiff;
+export default makeDiff;
