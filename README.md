@@ -10,7 +10,7 @@
 # Описание
 Это второй учебный проект от Hexlet - "Вычислитель различий" - программа, определяющая разницу между двумя структурами данных.
 
-В ходные данные читатются из файлов с расширением .json, .yaml или .yml. Вывод производится в консоль с возможностью выделения изменений цветом. 
+Входные данные читатются из файлов с расширением .json, .yaml или .yml. Вывод производится в консоль с возможностью выделения изменений цветом. 
 Отчет можно формировать в виде текстового описания изменений, структурированного вывода или строки в json-формате. Подробнее в разделе <a href="#game-description" >Использование -></a>
 
 # Установка
@@ -31,11 +31,6 @@ make install
 
 # Использование
 
-принимает опции:
--f --format - формат вывода отчета. Принимает значения: -stylish - значение по умолчанию, структурированный вывод. -plain - вывод текствового отчета в котором упоминаются только изменившиеся/удаленные/добавленные ключи. -json - вывод в виде строки json формата.
-
--c --colorize - флаг для выделения изменений цветом. По умолчанию отключен. Цвета для формата stylish: удаленные ключи - красный, измененные - желтый, добавленные - зеленый, неизменные ключи - белый. Для формата plain: удаленные ключи - красный, добавленные - зеленый, измененные - белый. Формат json не раскрашивается.
-
 ```
 $ gendiff -h
 Usage: gendiff [options] <filepath1> <filepath2>
@@ -49,8 +44,94 @@ Options:
   -h, --help          display help for command
 ```
 
+При консольном вызове утилита принимает следующие аргументы:
+<dl>
+ <dt> -f --format</dt> 
+ <dd> 
+    Формат вывода отчета. Возможные значения:
+    <dl>
+        <dt>stylish (значение по умолчанию)</dt>
+        <dd>
+            Cтруктурированный вывод. <a href="#anchor-stylish" >Пример -></a>
+        </dd>
+        <dt>plain</dt>
+        <dd>
+            Текствовый отчет с перечислением только изменившихся/удаленных/добавленных ключей.<a href="#anchor-plain" >Пример -></a>
+        </dd>
+        <dt>json</dt>
+        <dd>
+            Вывод в виде строки json формата. <a href="#anchor-json" >Пример -></a>
+        </dd>
+    </dl>
+</dt>
+<dt>
+    -c --colorize   
+</dt>
+<dd>
+    Флаг для раскраски вывода в терминал в зависимости от изменений внесенных в ключ. По умолчанию раскраска отключена отключен.
+    <table style="width: 100%; border: 1px solid;border-collapse:collapse;text-align: center;">
+        <head>
+            <th></th>
+            <th>stylish</th>
+            <th>plain</th>
+            <th>json</th>
+        </head>
+        <tr>
+            <td>удаление</td>
+            <td>$${\color{Red}красный}$$</td>
+            <td>$${\color{Red}красный}$$</td>
+            <td rowspan="4">$${\color{White}белый}$$</td>
+        </tr>
+        <tr>
+            <td>изменение</td>
+            <td style="color: yellow;">$${\color{yellow}желтый}$$</td>
+            <td>$${\color{White}белый}$$</td>
+        </tr>
+        <tr>
+            <td>добавление</td>
+            <td style="color: green">$${\color{lightgreen}зеленый}$$</td>
+            <td style="color: green">$${\color{lightgreen}зеленый}$$</td>
+        </tr>
+        <tr>
+            <td>без изменений</td>
+            <td>$${\color{White}белый}$$</td>
+            <td>-</td>
+        </tr>
+    </table>
+</dd>
+    
+<dt>path1 и path2</dt>
+<dd>Адреса файлов для сравнения. Можно использовать как абсолютные так и относительные пути. Поддерживаются форматы .json, .yaml и .yml</dd>
+</dl>
+
+<p>
+Вызов в кчестве функции происходит со следующими аргументами:</br>
+gendiff(path1, path2 [, formatStyle = 'stylish'[, colorize = false]])</br>
+где:
+<ul>
+    <li>path1 и path2 - строки с адресами файлов для сравнения;</li>
+    <li>formatStyle - формат вывода - строка с возможными вариантами: 'stylish', 'plain' и 'json';</li>
+    <li>colorize - раскраска консольного вывода - логическое значе.</li>
+</ul>
+</p>
+
+# Демонстрации
+
+<p id="anchor-stylish" ></p>
+
+### stylish
+
 [![asciicast](https://asciinema.org/a/570675.svg)](https://asciinema.org/a/570675)
 
+<p id="anchor-plain" ></p>
+
+### plain
+
 [![asciicast](https://asciinema.org/a/D8vQC1kuM9omCXzkUuRgdhyE6.svg)](https://asciinema.org/a/D8vQC1kuM9omCXzkUuRgdhyE6)
+
+
+<p id="anchor-json" ></p>
+
+### JSON
 
 [![asciicast](https://asciinema.org/a/570685.svg)](https://asciinema.org/a/570685)
