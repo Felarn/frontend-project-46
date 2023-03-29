@@ -1,7 +1,8 @@
 import getObjFromFile from './lib/getObjFromFile.js';
 import getDiff from './lib/getDiff.js';
-import applyFormat from './lib/applyFormat.js';
-import { display, getColorTags } from './lib/visuals.js';
+import applyFormat from './lib/formatter/applyFormat.js';
+import makeColorTags from './lib/visuals/makeColorTags.js';
+import display from './lib/visuals/display.js';
 
 export default function gendiff(path1, path2, formatStyle = 'stylish', colorize = false) {
   const obj1 = getObjFromFile(path1);
@@ -11,7 +12,7 @@ export default function gendiff(path1, path2, formatStyle = 'stylish', colorize 
   const diffString = formattedDiff.join('\n');
 
   if (colorize) {
-    const colorTags = getColorTags(diff, formatStyle);
+    const colorTags = makeColorTags(diff, formatStyle);
     display(formattedDiff, colorTags);
   } else {
     console.log(diffString);
