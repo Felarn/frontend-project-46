@@ -1,9 +1,9 @@
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { resolve, dirname } from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default (filePath) => String(
-  fs.readFileSync(
-    filePath[0] === '/'
-      ? filePath
-      : new URL(`../../${filePath}`, import.meta.url).pathname,
-  ),
+  fs.readFileSync(resolve(__dirname, '../..', filePath)),
 );
