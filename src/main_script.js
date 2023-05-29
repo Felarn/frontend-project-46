@@ -1,6 +1,8 @@
 import { program } from 'commander';
 import gendiff from './gendiff_core.js';
 import getTextFromFile from './lib/readFile.js';
+import makeColorTags from './lib/visuals/makeColorTags.js';
+import display from './lib/visuals/display.js';
 
 const { version } = JSON.parse(getTextFromFile('package.json'));
 
@@ -18,7 +20,15 @@ program
       throw new Error('Incorrect format option');
     }
 
-    gendiff(filepath1, filepath2, format, colorize);
+    const result = gendiff(filepath1, filepath2, format, colorize);
+
+    if (colorize) {
+      const [diff, diffFormatted] = result;
+      const colorTags = makeColorTags(diff, format);
+      display(diffFormatted, colorTags);
+    } else {
+      console.log(result);
+    }
   });
 
 export default () => program.parse();

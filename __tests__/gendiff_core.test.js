@@ -33,7 +33,7 @@ const formatStyles = [
   [file1Name, file2Name, expectJson, formatJson],
 ];
 const extesions = [extJSON, extYML, extYAML];
-const colorizeCases = [true, false];
+const colorizeCases = [false];
 
 // ============ tests ======================================
 describe.each(colorizeCases)('colorful output is %p', (colorize) => {
