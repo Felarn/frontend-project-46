@@ -85,16 +85,16 @@ When called from console, inputs are:
         </tr>
         <tr>
             <td>change</td>
-            <td style="color: yellow;">$${\color{yellow}yellow}$$</td>
+            <td style="color: yellow;">$${\color{yellow}Yellow}$$</td>
             <td>$${\color{White}White}$$</td>
         </tr>
         <tr>
             <td>addition</td>
-            <td style="color: green">$${\color{lightgreen}green}$$</td>
-            <td style="color: green">$${\color{lightgreen}green}$$</td>
+            <td style="color: green">$${\color{lightgreen}Green}$$</td>
+            <td style="color: green">$${\color{lightgreen}Green}$$</td>
         </tr>
         <tr>
-            <td>no change</td>
+            <td>unchanged</td>
             <td>$${\color{White}White}$$</td>
             <td>-</td>
         </tr>
