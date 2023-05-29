@@ -13,6 +13,6 @@ export default (filePath) => {
       return YML.load(readFile(filePath) || '{}');
 
     default:
-      throw new Error('unsupported file type');
+      throw new Error(`"${ext}" is unsupported file type`);
   }
 };
