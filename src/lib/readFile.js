@@ -1,9 +1,6 @@
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { resolve, dirname } from 'path';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { resolve } from 'path';
 
 export default (filePath) => String(
-  fs.readFileSync(resolve(__dirname, '../..', filePath)),
+  fs.readFileSync(resolve(process.cwd(), filePath)),
 );
