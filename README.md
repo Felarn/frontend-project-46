@@ -1,4 +1,4 @@
-# Тесты
+# Tests
 [![my-tests](https://github.com/Felarn/frontend-project-46/actions/workflows/my-tests.yml/badge.svg)](https://github.com/Felarn/frontend-project-46/actions/workflows/my-tests.yml) <span style="font-size: 18px;"> - Мои проверки</span>
 
 [![Actions Status](https://github.com/Felarn/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/Felarn/frontend-project-46/actions) <span style="font-size: 18px;"> - Hexlet tests and linter status.</span>
@@ -7,16 +7,17 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/4b558dec7ce816334c44/test_coverage)](https://codeclimate.com/github/Felarn/frontend-project-46/test_coverage) <span style="font-size: 18px;"> - Test coverage от Codeclimate.</span>
 
-# Описание
+# Description
+This is the second training project from Hexlet - "Differense calculator" - the programm to determine differense between two data structures.
 Это второй учебный проект от Hexlet - "Вычислитель различий" - программа, определяющая разницу между двумя структурами данных.
 
-Входные данные читатются из файлов с расширением .json, .yaml или .yml. Вывод производится в консоль с возможностью выделения изменений цветом. 
-Отчет можно формировать в виде текстового описания изменений, структурированного вывода или строки в json-формате. Подробнее в разделе <a href="#game-description" >Использование -></a>
+Input data is read from files with extensions .json, .yaml или .yml. Output is made to console with option to colorize output.
+Multiple output formats are supported: plain text, structured with indentations and json. More details in section <a href="#game-description" >Usage -></a>
 
-# Установка
+# Installation
 <ol>
-    <li>Склонировать репозиторий</li>
-    <li>Выполнить команду make install</li>
+    <li>clone repository</li>
+    <li>run command "make install"</li>
 </ol>
 
 ```
@@ -29,7 +30,7 @@ make install
 
 <p id="game-description" ></p>
 
-# Использование
+# Usage
 
 ```
 $ gendiff -h
@@ -44,23 +45,23 @@ Options:
   -h, --help          display help for command
 ```
 
-При консольном вызове утилита принимает следующие аргументы:
+When called from console inputs are:
 <dl>
  <dt> -f --format</dt> 
  <dd> 
-    Формат вывода отчета. Возможные значения:
+    Report format. Possible values:
     <dl>
-        <dt>stylish (значение по умолчанию)</dt>
+        <dt>stylish (default option)</dt>
         <dd>
-            Cтруктурированный вывод. <a href="#anchor-stylish" >Пример -></a>
+            Structured output. <a href="#anchor-stylish" >Sample -></a>
         </dd>
         <dt>plain</dt>
         <dd>
-            Текствовый отчет с перечислением только изменившихся/удаленных/добавленных ключей. <a href="#anchor-plain" >Пример-></a>
+            Report in plain text. List includes only changed, added or deleted keys, unchanged keys are skipped. <a href="#anchor-plain" >Sample-></a>
         </dd>
         <dt>json</dt>
         <dd>
-            Вывод в виде строки json формата. <a href="#anchor-json" >Пример -></a>
+            Output in json format. <a href="#anchor-json" >Sample -></a>
         </dd>
     </dl>
 </dt>
@@ -68,7 +69,8 @@ Options:
     -c --colorize   
 </dt>
 <dd>
-    Флаг для раскраски вывода в терминал в зависимости от изменений, внесенных в ключ. По умолчанию раскраска отключена.
+    Flag to colorize  of console output depending of changes made to key (turned off by default)
+    Color code:
     <table style="width: 100%; border: 1px solid;border-collapse:collapse;text-align: center;">
         <head>
             <th></th>
@@ -77,45 +79,45 @@ Options:
             <th>json</th>
         </head>
         <tr>
-            <td>удаление</td>
-            <td>$${\color{Red}красный}$$</td>
-            <td>$${\color{Red}красный}$$</td>
-            <td rowspan="4">$${\color{White}белый}$$</td>
+            <td>removal</td>
+            <td>$${\color{Red}Red}$$</td>
+            <td>$${\color{Red}Red}$$</td>
+            <td rowspan="4">$${\color{White}White}$$</td>
         </tr>
         <tr>
-            <td>изменение</td>
-            <td style="color: yellow;">$${\color{yellow}желтый}$$</td>
-            <td>$${\color{White}белый}$$</td>
+            <td>change</td>
+            <td style="color: yellow;">$${\color{yellow}yellow}$$</td>
+            <td>$${\color{White}White}$$</td>
         </tr>
         <tr>
-            <td>добавление</td>
-            <td style="color: green">$${\color{lightgreen}зеленый}$$</td>
-            <td style="color: green">$${\color{lightgreen}зеленый}$$</td>
+            <td>addition</td>
+            <td style="color: green">$${\color{lightgreen}green}$$</td>
+            <td style="color: green">$${\color{lightgreen}green}$$</td>
         </tr>
         <tr>
-            <td>без изменений</td>
-            <td>$${\color{White}белый}$$</td>
+            <td>no change</td>
+            <td>$${\color{White}White}$$</td>
             <td>-</td>
         </tr>
     </table>
 </dd>
     
 <dt>path1 и path2</dt>
-<dd>Адреса файлов для сравнения. Можно использовать как абсолютные так и относительные пути. Поддерживаются форматы .json, .yaml и .yml</dd>
+<dd>Path to files to tompare. Both absolute and relative paths are exaptable. Supported file extensions .json, .yaml и .yml</dd>
 </dl>
 
 <p>
-Вызов в кчестве функции происходит со следующими аргументами:</br>
+Function call arguments are:</br>
 gendiff(path1, path2 [, formatStyle = 'stylish'[, colorize = false]])</br>
-где:
+where:
 <ul>
-    <li>path1 и path2 - строки с адресами файлов для сравнения;</li>
-    <li>formatStyle - формат вывода - строка с возможными вариантами: 'stylish', 'plain' и 'json';</li>
+    <li>path1 и path2 - strings containing file paths;</li>
+    <li>formatStyle - output format - string with possible arguments: 'stylish', 'plain' и 'json';</li>
     <li>colorize - раскраска консольного вывода - логическое значе.</li>
 </ul>
 </p>
 
-# Демонстрации
+# Demo
 
 <p id="anchor-stylish" ></p>
 
