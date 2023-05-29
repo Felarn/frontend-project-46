@@ -8,7 +8,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/4b558dec7ce816334c44/test_coverage)](https://codeclimate.com/github/Felarn/frontend-project-46/test_coverage) <span style="font-size: 18px;"> - Test coverage от Codeclimate.</span>
 
 # Description
-This is the second training project from Hexlet - "Differense calculator" - the programm to determine differense between two data structures.
+This is the second training project from Hexlet - "Difference calculator" - the program to determine difference between two data structures.
 Это второй учебный проект от Hexlet - "Вычислитель различий" - программа, определяющая разницу между двумя структурами данных.
 
 Input data is read from files with extensions .json, .yaml или .yml. Output is made to console with option to colorize output.
@@ -45,7 +45,7 @@ Options:
   -h, --help          display help for command
 ```
 
-When called from console inputs are:
+When called from console, inputs are:
 <dl>
  <dt> -f --format</dt> 
  <dd> 
@@ -69,7 +69,7 @@ When called from console inputs are:
     -c --colorize   
 </dt>
 <dd>
-    Flag to colorize  of console output depending of changes made to key (turned off by default)
+    Flag to colorize of console output depending on changes made to key (turned off by default)
     Color code:
     <table style="width: 100%; border: 1px solid;border-collapse:collapse;text-align: center;">
         <head>
@@ -103,7 +103,7 @@ When called from console inputs are:
 </dd>
     
 <dt>path1 и path2</dt>
-<dd>Path to files to tompare. Both absolute and relative paths are exaptable. Supported file extensions .json, .yaml и .yml</dd>
+<dd>Path to files to compare. Both absolute and relative paths are acceptable. Supported file extensions .json, .yaml и .yml</dd>
 </dl>
 
 <p>
