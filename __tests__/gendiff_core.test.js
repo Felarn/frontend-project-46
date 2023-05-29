@@ -2,32 +2,32 @@ import readFile from '../src/lib/readFile.js';
 import gendiff from '../src/gendiff_core.js';
 import getFixturePath from './test_funct/getFixturePath.js';
 
-// ========= части имен файлов со входными данными ======
-// директория
+// ========= input data file name parts ======
+// directory
 const inputDir = 'input_files';
-// основная часть имени
+// file name
 const file1Name = 'file1';
 const file2Name = 'file2';
-// расширения
+// extensions
 const extJSON = '.json';
 const extYML = '.yml';
 const extYAML = '.yaml';
 
-// ========= файлы с ожидаемымыи результатами ===========
-// директория
+// ========= result file names ===========
+// directory
 const resultDir = 'expected_results';
-// файлы
+// file
 const expectJson = 'json_1_2.txt';
 const expectPlain = 'plain_1_2.txt';
 const expectStylish = 'stylish_1_2.txt';
 
-// ============== cтили форматирования ==================
+// ============== format styles ==================
 const formatStylish = 'stylish';
 const formatPlain = 'plain';
 const formatJson = 'json';
 
-// =========== таблицы комбинаций для проверки ==========
-const cases = [
+// =========== combinations of parameters ==========
+const formatStyles = [
   [file1Name, file2Name, expectStylish, formatStylish],
   [file1Name, file2Name, expectPlain, formatPlain],
   [file1Name, file2Name, expectJson, formatJson],
@@ -35,11 +35,11 @@ const cases = [
 const extesions = [extJSON, extYML, extYAML];
 const colorizeCases = [true, false];
 
-// ============ тесты ======================================
+// ============ tests ======================================
 describe.each(colorizeCases)('colorful output is %p', (colorize) => {
   describe.each(extesions)('from %s-file', (ext1) => {
     describe.each(extesions)('to %s-file', (ext2) => {
-      test.each(cases)(
+      test.each(formatStyles)(
         'from: %s to --> %s \n\texpected output from file: %s. %s format',
         (file1, file2, expFile, format) => {
           const path1 = getFixturePath([inputDir, file1 + ext1]);
