@@ -9,7 +9,6 @@
 
 # Description
 This is the second training project from Hexlet - "Difference calculator" - the program to determine difference between two data structures.
-Это второй учебный проект от Hexlet - "Вычислитель различий" - программа, определяющая разницу между двумя структурами данных.
 
 Input data is read from files with extensions .json, .yaml или .yml. Output is made to console with option to colorize output.
 Multiple output formats are supported: plain text, structured with indentations and json. More details in section <a href="#game-description" >Usage -></a>
@@ -113,7 +112,6 @@ where:
 <ul>
     <li>path1 и path2 - strings containing file paths;</li>
     <li>formatStyle - output format - string with possible arguments: 'stylish', 'plain' и 'json';</li>
-    <li>colorize - раскраска консольного вывода - логическое значе.</li>
 </ul>
 </p>
 
